@@ -36,13 +36,15 @@ Chrome, Safari, Opera, FireFox 17+, IE9+.
 
 ### Events available ###
 
-|Event name         | Description                                                                            |
-|:------------------|:---------------------------------------------------------------------------------------|
-|`wheelzoom.reset`  | Fired when image zoom level return to zero.                                            |
-|`wheelzoom.destroy`| Firing this event is possible to reset wheelzoom behaviour (see above example).        |
-|`wheelzoom.in`     | Fired when image is zoomed in (see full demo example).                                 |  
-|`wheelzoom.out`    | Fired when image is zoomed out (see full demo example).                                | 
-|`wheelzoom.drag`   | Fired when image is dragged (see full demo example).                                   |
+|Event name            | Description                                                                            |
+|:------------------   |:---------------------------------------------------------------------------------------|
+|`wheelzoom.reset`     | Fired when image zoom level return to zero.                                            |
+|`wheelzoom.destroy`   | Firing this event is possible to reset wheelzoom behaviour (see above example).        |
+|`wheelzoom.in`        | Fired when image is zoomed in (see full demo example).                                 |  
+|`wheelzoom.out`       | Fired when image is zoomed out (see full demo example).                                |
+|`wheelzoom.dragstart` | Fired when start dragging on the image (see full demo example).                        |
+|`wheelzoom.drag`      | Fired when image is dragged (see full demo example).                                   |
+|`wheelzoom.dragend`   | Fired when end dragging on the image (see full demo example).                          |
 
 ## License ##
 [MIT License](http://opensource.org/licenses/MIT)
