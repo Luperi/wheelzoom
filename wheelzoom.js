@@ -43,6 +43,7 @@ window.wheelzoom = (function(){
 	var canvas = document.createElement('canvas');
 
 	var main = function(img, options){
+		console.log(options);
 		if (!img || !img.nodeName || img.nodeName !== 'IMG') { return; }
 
 		var settings = {};
@@ -278,10 +279,13 @@ window.wheelzoom = (function(){
 	} else {
 		return function(elements, options) {
 			if (elements && elements.length) {
-				Array.prototype.forEach.call(elements, main, options);
+				elements.forEach(function(element) {
+					main(element, options);
+				});
 			} else if (elements && elements.nodeName) {
 				main(elements, options);
 			}
+			
 			return elements;
 		};
 	}
