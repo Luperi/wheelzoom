@@ -278,10 +278,13 @@ window.wheelzoom = (function(){
 	} else {
 		return function(elements, options) {
 			if (elements && elements.length) {
-				Array.prototype.forEach.call(elements, main, options);
+				elements.forEach(function(element) {
+					main(element, options);
+				});
 			} else if (elements && elements.nodeName) {
 				main(elements, options);
 			}
+
 			return elements;
 		};
 	}
