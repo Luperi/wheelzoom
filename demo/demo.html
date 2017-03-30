@@ -13,6 +13,7 @@
 	
 		<h2>Basic usage</h2>
 		<p>Try to zoom with your mouse wheel and drag on the below image.</p>
+		<span>Fired event:</span> <b><span id="label1">""</span><b/><br/><br/>
 		<div width="500px">
 			<img id="img1" src="./img/img1.jpg" style="width: 500px;">
 		</div>
@@ -35,6 +36,23 @@
 				</td>
 			</tr>
 		</table>
+		
+		<p>
+			<ul>
+				<li>if you drag on one of the image, the same drag is applied to the other one, <b>WHEN DRAG IS ENDEND</b>.</li>
+			</ul>
+		</p>
+		<table style="width: 500px;">
+			<tr>
+				<td width="50%">
+					<img id="img4" src="./img/img1.jpg" style="width: 500px;">
+				</td>
+				
+				<td width="50%">
+					<img id="img5" src="./img/img2.jpg" style="width: 500px;">
+				</td>
+			</tr>
+		</table>
 	</body>
 	
 	<script src="../wheelzoom.js"></script>
@@ -45,14 +63,20 @@
 			
 			images = wheelzoom(document.querySelectorAll('img'), {zoom: 0.5, maxZoom: 10});
 			
-			images[1].addEventListener('wheelzoom.in', function(e) {
-				images[2].doZoom(zoomIn, e.detail.bgCursorX, e.detail.bgCursorY, false);
+			images[0].addEventListener('wheelzoom.in', function(e) {
+				document.getElementById('label1').innerHTML = '"wheelzoom.in"';
 			});
-			images[1].addEventListener('wheelzoom.out', function(e) {
-				images[2].doZoom(zoomOut, e.detail.bgCursorX, e.detail.bgCursorY, false);
+			images[0].addEventListener('wheelzoom.out', function(e) {
+				document.getElementById('label1').innerHTML = '"wheelzoom.out"';
 			});
-			images[1].addEventListener('wheelzoom.drag', function(e) {
-				images[2].doDrag(e.detail.xShift, e.detail.yShift);
+			images[0].addEventListener('wheelzoom.dragstart', function(e) {
+				document.getElementById('label1').innerHTML = '"wheelzoom.dragstart"';
+			});
+			images[0].addEventListener('wheelzoom.drag', function(e) {
+				document.getElementById('label1').innerHTML = '"wheelzoom.drag"';
+			});
+			images[0].addEventListener('wheelzoom.dragend', function(e) {
+				document.getElementById('label1').innerHTML = '"wheelzoom.dragend"';
 			});
 			
 			images[1].addEventListener('wheelzoom.in', function(e) {
@@ -63,6 +87,36 @@
 			});
 			images[1].addEventListener('wheelzoom.drag', function(e) {
 				images[2].doDrag(e.detail.xShift, e.detail.yShift);
+			});
+			
+			images[2].addEventListener('wheelzoom.in', function(e) {
+				images[1].doZoom(zoomIn, e.detail.bgCursorX, e.detail.bgCursorY, false);
+			});
+			images[2].addEventListener('wheelzoom.out', function(e) {
+				images[1].doZoom(zoomOut, e.detail.bgCursorX, e.detail.bgCursorY, false);
+			});
+			images[2].addEventListener('wheelzoom.drag', function(e) {
+				images[1].doDrag(e.detail.xShift, e.detail.yShift);
+			});
+			
+			images[3].addEventListener('wheelzoom.in', function(e) {
+				images[4].doZoom(zoomIn, e.detail.bgCursorX, e.detail.bgCursorY, false);
+			});
+			images[3].addEventListener('wheelzoom.out', function(e) {
+				images[4].doZoom(zoomOut, e.detail.bgCursorX, e.detail.bgCursorY, false);
+			});
+			images[3].addEventListener('wheelzoom.dragend', function(e) {
+				images[4].doDrag(e.detail.xShift, e.detail.yShift);
+			});
+			
+			images[4].addEventListener('wheelzoom.in', function(e) {
+				images[3].doZoom(zoomIn, e.detail.bgCursorX, e.detail.bgCursorY, false);
+			});
+			images[4].addEventListener('wheelzoom.out', function(e) {
+				images[3].doZoom(zoomOut, e.detail.bgCursorX, e.detail.bgCursorY, false);
+			});
+			images[4].addEventListener('wheelzoom.dragend', function(e) {
+				images[3].doDrag(e.detail.xShift, e.detail.yShift);
 			});
 		}
 	</script>
