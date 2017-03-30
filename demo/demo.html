@@ -61,7 +61,7 @@
 			var zoomIn  = -100;
 			var zoomOut = 100;
 			
-			images = wheelzoom(document.querySelectorAll('img'), {zoom: 0.5, maxZoom: 10});
+			images = wheelzoom(document.querySelectorAll('img'), {zoom: 0.1, maxZoom: 10});
 			
 			images[0].addEventListener('wheelzoom.in', function(e) {
 				document.getElementById('label1').innerHTML = '"wheelzoom.in"';
