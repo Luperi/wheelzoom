@@ -38,8 +38,8 @@ Chrome, Safari, Opera, FireFox 17+, IE9+.
 
 |Event name         | Description                                                                            |
 |:------------------|:---------------------------------------------------------------------------------------|
-|`wheelzoom.reset`  | Fired when image zoom level return to zero. | N.A.                                     |
-|`wheelzoom.destroy`| Firing this event is possible to reset wheelzoom behaviour (see above example). | N.A. |
+|`wheelzoom.reset`  | Fired when image zoom level return to zero.                                            |
+|`wheelzoom.destroy`| Firing this event is possible to reset wheelzoom behaviour (see above example).        |
 |`wheelzoom.in`     | Fired when image is zoomed in (see full demo example).                                 |  
 |`wheelzoom.out`    | Fired when image is zoomed out (see full demo example).                                | 
 |`wheelzoom.drag`   | Fired when image is dragged (see full demo example).                                   |
