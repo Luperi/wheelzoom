@@ -5,33 +5,14 @@
 		<meta charset="UTF-8">
 	</head>
 	<body onload="load();">
-		<h1>Wellcome to <a target="_blank" href="https://luperi.github.io/wheelzoom/">wheelzoom 1.0</a> demo page</h1>
-		<p>
-			This page illustrates two simple implementation of the library.
-			See full documentation on <a target="_blank" href="https://github.com/Luperi/wheelzoom">GitHub</a>.
-		</p>
-	
-		<h2>Basic usage</h2>
-		<p>Try to zoom with your mouse wheel and drag on the below image.</p>
-		<div width="500px">
-			<img id="img1" src="./img/img1.jpg" style="width: 500px;">
-		</div>
-		
-		<h2>Event handling</h2>
-		<p>This example shows a simple implementation of event handling:
-			<ul>
-				<li>if you zoom one of the image, the same zoom level is applied to the other one;</li>
-				<li>if you drag on one of the image, the same drag is applied to the other one.</li>
-			</ul>
-		</p>
 		<table style="width: 500px;">
 			<tr>
 				<td width="50%">
-					<img id="img2" src="./img/img1.jpg" style="width: 500px;">
+					<img id="img1" src="./img/img1.jpg" style="width: 500px;">
 				</td>
 				
 				<td width="50%">
-					<img id="img3" src="./img/img2.jpg" style="width: 500px;">
+					<img id="img2" src="./img/img2.jpg" style="width: 500px;">
 				</td>
 			</tr>
 		</table>
@@ -43,26 +24,29 @@
 			var zoomIn  = -100;
 			var zoomOut = 100;
 			
-			images = wheelzoom(document.querySelectorAll('img'), {zoom: 0.5, maxZoom: 10});
+			images = wheelzoom([
+				document.getElementById('img1'),
+				document.getElementById('img2')
+			]);
+			
+			images[0].addEventListener('wheelzoom.in', function(e) {
+				images[1].doZoom(zoomIn, e.detail.bgCursorX, e.detail.bgCursorY, false);
+			});
+			images[0].addEventListener('wheelzoom.out', function(e) {
+				images[1].doZoom(zoomOut, e.detail.bgCursorX, e.detail.bgCursorY, false);
+			});
+			images[0].addEventListener('wheelzoom.drag', function(e) {
+				images[1].doDrag(e.detail.xShift, e.detail.yShift);
+			});
 			
 			images[1].addEventListener('wheelzoom.in', function(e) {
-				images[2].doZoom(zoomIn, e.detail.bgCursorX, e.detail.bgCursorY, false);
+				images[0].doZoom(zoomIn, e.detail.bgCursorX, e.detail.bgCursorY, false);
 			});
 			images[1].addEventListener('wheelzoom.out', function(e) {
-				images[2].doZoom(zoomOut, e.detail.bgCursorX, e.detail.bgCursorY, false);
+				images[0].doZoom(zoomOut, e.detail.bgCursorX, e.detail.bgCursorY, false);
 			});
 			images[1].addEventListener('wheelzoom.drag', function(e) {
-				images[2].doDrag(e.detail.xShift, e.detail.yShift);
-			});
-			
-			images[1].addEventListener('wheelzoom.in', function(e) {
-				images[2].doZoom(zoomIn, e.detail.bgCursorX, e.detail.bgCursorY, false);
-			});
-			images[1].addEventListener('wheelzoom.out', function(e) {
-				images[2].doZoom(zoomOut, e.detail.bgCursorX, e.detail.bgCursorY, false);
-			});
-			images[1].addEventListener('wheelzoom.drag', function(e) {
-				images[2].doDrag(e.detail.xShift, e.detail.yShift);
+				images[0].doDrag(e.detail.xShift, e.detail.yShift);
 			});
 		}
 	</script>
