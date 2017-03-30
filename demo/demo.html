@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Wheelzoom example - Luca Perico</title>
+		<meta charset="UTF-8">
+	</head>
+	<body onload="load();">
+		<table style="width: 500px;">
+			<tr>
+				<td width="50%">
+					<img id="img1" src="./img/img1.jpg" style="width: 500px;">
+				</td>
+				
+				<td width="50%">
+					<img id="img2" src="./img/img2.jpg" style="width: 500px;">
+				</td>
+			</tr>
+		</table>
+	</body>
+	
+	<script src="../wheelzoom.js"></script>
+	<script>
+		function load() {
+			var zoomIn  = -100;
+			var zoomOut = 100;
+			
+			images = wheelzoom([
+				document.getElementById('img1'),
+				document.getElementById('img2')
+			]);
+			
+			images[0].addEventListener('wheelzoom.in', function(e) {
+				images[1].doZoom(zoomIn, e.detail.bgCursorX, e.detail.bgCursorY, false);
+			});
+			images[0].addEventListener('wheelzoom.out', function(e) {
+				images[1].doZoom(zoomOut, e.detail.bgCursorX, e.detail.bgCursorY, false);
+			});
+			images[0].addEventListener('wheelzoom.drag', function(e) {
+				images[1].doDrag(e.detail.xShift, e.detail.yShift);
+			});
+			
+			images[1].addEventListener('wheelzoom.in', function(e) {
+				images[0].doZoom(zoomIn, e.detail.bgCursorX, e.detail.bgCursorY, false);
+			});
+			images[1].addEventListener('wheelzoom.out', function(e) {
+				images[0].doZoom(zoomOut, e.detail.bgCursorX, e.detail.bgCursorY, false);
+			});
+			images[1].addEventListener('wheelzoom.drag', function(e) {
+				images[0].doDrag(e.detail.xShift, e.detail.yShift);
+			});
+		}
+	</script>
+</html>
