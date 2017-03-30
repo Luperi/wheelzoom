@@ -1,6 +1,7 @@
 # Wheelzoom #
 
 Based on [this script](http://www.jacklmoore.com/wheelzoom/), which is no longer manteined.
+
 This is a simple Javascript library for zooming IMG elements with the mousewheel/trackpad Wheelzoom works by replacing the img element's src with a transparent image, then using the original src as a background image, which can be sized and positioned. Wheelzoom is dependency free (no jQuery required), doesn't add any extra elements to the DOM, or change the positioning of the IMG element.
 
 ## DEMO ##
