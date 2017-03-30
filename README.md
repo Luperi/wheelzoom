@@ -5,7 +5,7 @@ Based on [this script](http://www.jacklmoore.com/wheelzoom/), which is no longer
 This is a simple Javascript library for zooming IMG elements with the mousewheel/trackpad Wheelzoom works by replacing the img element's src with a transparent image, then using the original src as a background image, which can be sized and positioned. Wheelzoom is dependency free (no jQuery required), doesn't add any extra elements to the DOM, or change the positioning of the IMG element.
 
 ## DEMO ##
-[DEMO](#)
+[Here](https://luperi.github.io/wheelzoomdemo/) you can find a full usage example, enjoy :)
 
 ## Usage ##
 ### Supported Browsers ###
@@ -36,7 +36,7 @@ Chrome, Safari, Opera, FireFox 17+, IE9+.
 
 ### Events available ###
 Event name | Description |
-:-------------------|:-----------------|
+|:-------------------|:-----------------|
 `wheelzoom.reset`| Fired when image zoom level return to zero. | N.A.
 `wheelzoom.destroy`| Firing this event is possible to reset wheelzoom behaviour (see above example). | N.A.
 `wheelzoom.in`| Fired when image is zoomed in (see full demo example). |  
