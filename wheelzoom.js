@@ -278,11 +278,13 @@ window.wheelzoom = (function(){
 			settings[key] = typeof options[key] !== 'undefined' ? options[key] : defaults[key];
 		});
 
-		if (img.complete) {
-			load();
-		}
+		var t = setInterval(function(){
+			if (img.complete) {
+				load();
+			}
 
-		img.addEventListener('load', load);
+			clearInterval(t);
+		}, 100);
 	};
 
 	// Do nothing in IE8
