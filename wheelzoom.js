@@ -1,5 +1,5 @@
 /*!
-	Wheelzoom 1.0.0
+	Wheelzoom 1.1.0
 	license: MIT
 	https://github.com/Luperi/wheelzoom
 */
@@ -54,8 +54,8 @@ window.wheelzoom = (function(){
 		var bgPosY;
 		var previousEvent;
 		var cachedDataUrl;
-		var xDragShift;
-		var yDragShift;
+		var initBgPosX;
+		var initBgPosY;
 
 		function setSrcToBackground(img) {
 			img.style.backgroundImage = 'url("'+img.src+'")';
@@ -90,17 +90,37 @@ window.wheelzoom = (function(){
 			updateBgStyle();
 		}
 
-		img.doZoom = function (deltaY, offsetX, offsetY, propagate) {
+		img.doZoomIn = function(propagate) {
 			if (typeof propagate === 'undefined') {
-				propagate = true;
+				propagate = false;
 			}
 
-			// Record the offset between the bg edge and cursor:
-			var bgCursorX = offsetX - bgPosX;
-			var bgCursorY = offsetY - bgPosY;
-			// Use the previous offset to get the percent offset between the bg edge and cursor:
-			var bgRatioX = bgCursorX/bgWidth;
-			var bgRatioY = bgCursorY/bgHeight;
+			doZoom(-100, propagate);
+		}
+
+		img.doZoomOut = function(propagate) {
+			if (typeof propagate === 'undefined') {
+				propagate = false;
+			}
+
+			doZoom(100, propagate);
+		}
+
+		function doZoom (deltaY, propagate) {
+			if (typeof propagate === 'undefined') {
+				propagate = false;
+			}
+
+			// zoom always at the center of the image
+			var offsetX = img.width/2;
+			var offsetY = img.height/2;
+
+			// Record the offset between the bg edge and the center of the image:
+			var bgCenterX = offsetX - bgPosX;
+			var bgCenterY = offsetY - bgPosY;
+			// Use the previous offset to get the percent offset between the bg edge and the center of the image:
+			var bgRatioX = bgCenterX/bgWidth;
+			var bgRatioY = bgCenterY/bgHeight;
 
 			// Update the bg size:
 			if (deltaY < 0) {
@@ -122,28 +142,18 @@ window.wheelzoom = (function(){
 					// setTimeout to handle lot of events fired
 					setTimeout(function() {
 						triggerEvent(img, 'wheelzoom.in', {
-							bgWidth: bgWidth,
-							bgHeight: bgHeight,
+							zoom: bgWidth/width,
 							bgPosX: bgPosX,
-							bgPosY: bgPosY,
-							width: width,
-							height: height,
-							bgCursorX: bgCursorX,
-							bgCursorY: bgCursorY
+							bgPosY: bgPosY
 						});
 					}, 10);
 				} else {
 					// setTimeout to handle lot of events fired
 					setTimeout(function() {
 						triggerEvent(img, 'wheelzoom.out', {
-							bgWidth: bgWidth,
-							bgHeight: bgHeight,
+							zoom: bgWidth/width,
 							bgPosX: bgPosX,
-							bgPosY: bgPosY,
-							width: width,
-							height: height,
-							bgCursorX: bgCursorX,
-							bgCursorY: bgCursorY
+							bgPosY: bgPosY
 						});
 					}, 10);
 				}
@@ -168,19 +178,16 @@ window.wheelzoom = (function(){
 				deltaY = -e.wheelDelta;
 			}
 
-			// As far as I know, there is no good cross-browser way to get the cursor position relative to the event target.
-			// We have to calculate the target element's position relative to the document, and subtrack that from the
-			// cursor's position relative to the document.
-			var rect = img.getBoundingClientRect();
-			var offsetX = e.pageX - rect.left - window.pageXOffset;
-			var offsetY = e.pageY - rect.top - window.pageYOffset;
-
-			img.doZoom(deltaY, offsetX, offsetY);
+			if (deltaY < 0) {
+				img.doZoomIn(true);
+			} else {
+				img.doZoomOut(true);
+			}
 		}
 
-		img.doDrag = function (xShift, yShift) {
-			bgPosX += xShift;
-			bgPosY += yShift;
+		img.doDrag = function (x, y) {
+			bgPosX = x;
+			bgPosY = y;
 
 			updateBgStyle();
 		}
@@ -189,8 +196,10 @@ window.wheelzoom = (function(){
 			e.preventDefault();
 			var xShift = e.pageX - previousEvent.pageX;
 			var yShift = e.pageY - previousEvent.pageY;
+			var x = bgPosX + xShift;
+			var y = bgPosY + yShift;
 
-			img.doDrag(xShift, yShift);
+			img.doDrag(x, y);
 
 			triggerEvent(img, 'wheelzoom.drag', {
 				bgPosX: bgPosX,
@@ -199,17 +208,14 @@ window.wheelzoom = (function(){
 				yShift: yShift
 			});
 
-			xDragShift += xShift;
-			yDragShift += yShift;
-
 			previousEvent = e;
 			updateBgStyle();
 		}
 
 		function removeDrag() {
 			triggerEvent(img, 'wheelzoom.dragend', {
-				xShift: xDragShift,
-				yShift: yDragShift
+				x: bgPosX - initBgPosX,
+				y: bgPosY - initBgPosY
 			});
 
 			document.removeEventListener('mouseup', removeDrag);
@@ -218,9 +224,6 @@ window.wheelzoom = (function(){
 
 		// Make the background draggable
 		function draggable(e) {
-			xDragShift = 0;
-			yDragShift = 0;
-
 			triggerEvent(img, 'wheelzoom.dragstart');
 
 			e.preventDefault();
@@ -238,8 +241,7 @@ window.wheelzoom = (function(){
 			height = parseInt(computedStyle.height, 10);
 			bgWidth = width;
 			bgHeight = height;
-			bgPosX = 0;
-			bgPosY = 0;
+			bgPosX = bgPosY = initBgPosX = initBgPosY = 0;
 
 			setSrcToBackground(img);
 

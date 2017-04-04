@@ -80,43 +80,43 @@
 			});
 			
 			images[1].addEventListener('wheelzoom.in', function(e) {
-				images[2].doZoom(zoomIn, e.detail.bgCursorX, e.detail.bgCursorY, false);
+				images[2].doZoomIn();
 			});
 			images[1].addEventListener('wheelzoom.out', function(e) {
-				images[2].doZoom(zoomOut, e.detail.bgCursorX, e.detail.bgCursorY, false);
+				images[2].doZoomOut();
 			});
 			images[1].addEventListener('wheelzoom.drag', function(e) {
-				images[2].doDrag(e.detail.xShift, e.detail.yShift);
+				images[2].doDrag(e.detail.bgPosX, e.detail.bgPosY);
 			});
 			
 			images[2].addEventListener('wheelzoom.in', function(e) {
-				images[1].doZoom(zoomIn, e.detail.bgCursorX, e.detail.bgCursorY, false);
+				images[1].doZoomIn();
 			});
 			images[2].addEventListener('wheelzoom.out', function(e) {
-				images[1].doZoom(zoomOut, e.detail.bgCursorX, e.detail.bgCursorY, false);
+				images[1].doZoomOut();
 			});
 			images[2].addEventListener('wheelzoom.drag', function(e) {
-				images[1].doDrag(e.detail.xShift, e.detail.yShift);
+				images[1].doDrag(e.detail.bgPosX, e.detail.bgPosY);
 			});
 			
 			images[3].addEventListener('wheelzoom.in', function(e) {
-				images[4].doZoom(zoomIn, e.detail.bgCursorX, e.detail.bgCursorY, false);
+				images[4].doZoomIn();
 			});
 			images[3].addEventListener('wheelzoom.out', function(e) {
-				images[4].doZoom(zoomOut, e.detail.bgCursorX, e.detail.bgCursorY, false);
+				images[4].doZoomOut();
 			});
 			images[3].addEventListener('wheelzoom.dragend', function(e) {
-				images[4].doDrag(e.detail.xShift, e.detail.yShift);
+				images[4].doDrag(e.detail.x, e.detail.y);
 			});
 			
 			images[4].addEventListener('wheelzoom.in', function(e) {
-				images[3].doZoom(zoomIn, e.detail.bgCursorX, e.detail.bgCursorY, false);
+				images[3].doZoomIn();
 			});
 			images[4].addEventListener('wheelzoom.out', function(e) {
-				images[3].doZoom(zoomOut, e.detail.bgCursorX, e.detail.bgCursorY, false);
+				images[3].doZoomOut();
 			});
 			images[4].addEventListener('wheelzoom.dragend', function(e) {
-				images[3].doDrag(e.detail.xShift, e.detail.yShift);
+				images[3].doDrag(e.detail.x, e.detail.y);
 			});
 		}
 	</script>
